@@ -1,2 +1,13 @@
 # TAP - Técnicas Avançadas de Programação
-## Mestrado de Engenharia de Software - 2023/24
+## Mestrado em Engenharia de Software - 2023/24
+
+### LAB 01
+- Conditional expressions
+- Recursion
+- Tail recursion
+
+### LAB 02
+- Scala Test
+- Higher Order Functions
+- Anonymous Functions
+- Currying
