@@ -30,7 +30,9 @@ jobs:
         cache: 'sbt'
     - name: Determine changed directory
       id: changed-directory
-      run: echo "::set-output name=directory::$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -oP '^\K.*(?=/)' | uniq)"
+      run: |
+        changed_directory=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -oP '^\K.*(?=/)' | uniq)
+        echo "directory=${changed_directory}" >> $GITHUB_ENV
     - name: Change directory
       run: cd ${{ steps.changed-directory.outputs.directory }}
     - name: Run tests
