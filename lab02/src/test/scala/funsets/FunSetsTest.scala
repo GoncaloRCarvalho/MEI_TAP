@@ -20,10 +20,9 @@ class FunSetSuite extends AnyFunSuite:
   /**
    * Tests are written using the "test" operator and the "assert" method.
    */
-  test("string take") {
+  test("string take"):
     val message = "hello, world"
     assert(message.take(5) == "hello")
-  }
 
   /**
    * For ScalaTest tests, there exists a special equality operator "===" that
@@ -34,16 +33,14 @@ class FunSetSuite extends AnyFunSuite:
    * Try it out! Change the values so that the assertion fails, and look at the
    * error message.
    */
-  test("adding ints") {
+  test("adding ints"):
     assert(1 + 2 === 3)
-  }
 
   
   import FunSets.*
 
-  test("contains is implemented") {
+  test("contains is implemented"):
     assert(contains(x => true, 100))
-  }
   
   /**
    * When writing tests, one would often like to re-use certain values for multiple
@@ -76,7 +73,7 @@ class FunSetSuite extends AnyFunSuite:
    * Once you finish your implementation of "singletonSet", exchange the
    * function "ignore" by "test".
    */
-  test("singletonSet(1) contains 1") {
+  test("singletonSet(1) contains 1"):
     
     /**
      * We create a new instance of the "TestSets" trait, this gives us access
@@ -88,57 +85,49 @@ class FunSetSuite extends AnyFunSuite:
        * the test fails. This helps identifying which assertion failed.
        */
       assert(contains(s1, 1), "Singleton")
-  }
 
-  test("union contains all elements") {
+  test("union contains all elements"):
     new TestSets:
       val s = union(s1, s2)
       assert(contains(s, 1), "Union 1")
       assert(contains(s, 2), "Union 2")
       assert(!contains(s, 3), "Union 3")
-  }
   
-  test("intersections") {
+  test("intersections"):
     new TestSets:
       val sa = intersect(s1, s2)
       val sb = intersect(s1, s1)
       assert(!contains(sa, 1), "Intersect 1")
       assert(!contains(sa, 2), "Intersect 2")
       assert(contains(sb, 1), "Intersect 3")
-  }
   
-  test("difference") {
+  test("difference"):
     new TestSets:
       val s = diff(s1, s2)
       assert(contains(s, 1), "Diff 1")
       assert(!contains(s, 2), "Diff 2")
       assert(!contains(s, 3), "Diff 3")
-  }
   
-  test("filtering") {
+  test("filtering"):
     new TestSets:
       val s = filter(s1, s2)
       assert(!contains(s, 1), "Filter 1")
       assert(!contains(s, 2), "Filter 2")
       assert(!contains(s, 3), "Filter 3")
-  }
   
-  test("forall predicate") {
+  test("forall predicate"):
     new TestSets:
       assert(forall(s1, s1))
       assert(!forall(s1, s2))
-  }
   
-  test("exists predicate") {
+  test("exists predicate"):
     new TestSets:
       assert(exists(s1, s1))
       assert(!exists(s1, s2))
-  }
   
-  test("mapping") {
+  test("mapping"):
     new TestSets:
       val s = map(s1, x => x*2)
       assert(forall(s, s2))
-  }
   
 
