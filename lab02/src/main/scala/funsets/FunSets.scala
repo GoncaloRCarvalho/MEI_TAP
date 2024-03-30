@@ -71,6 +71,7 @@ object FunSets:
    */
   def map(s: Set, f: Int => Int): Set =
     (elem: Int) => exists(s, x => f(x) == elem)
+    
 
   /**
    * Displays the contents of a set
