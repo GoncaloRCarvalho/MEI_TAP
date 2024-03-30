@@ -1,15 +1,16 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
 name: Scala CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
+    paths:
+      - '*/**' # Trigger on any file changes in any directory
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
+    paths:
+      - '*/**' # Trigger on any file changes in any directory
 
 permissions:
   contents: read
@@ -27,6 +28,11 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: 'sbt'
+    - name: Determine changed directory
+      id: changed-directory
+      run: echo "::set-output name=directory::$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -oP '^\K.*(?=/)' | uniq)"
+    - name: Change directory
+      run: cd ${{ steps.changed-directory.outputs.directory }}
     - name: Run tests
       run: sbt test
       # Optional: This step uploads information to the GitHub dependency graph and unblocking Dependabot alerts for the repository
