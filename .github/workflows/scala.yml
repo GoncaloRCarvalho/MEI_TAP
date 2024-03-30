@@ -4,13 +4,9 @@ on:
   push:
     branches:
       - main
-    paths:
-      - '*/**' # Trigger on any file changes in any directory
   pull_request:
     branches:
       - main
-    paths:
-      - '*/**' # Trigger on any file changes in any directory
 
 permissions:
   contents: read
@@ -30,13 +26,10 @@ jobs:
         cache: 'sbt'
     - name: Determine changed directory
       id: changed-directory
-      run: |
-        changed_directory=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -oP '^\K.*(?=/)' | uniq)
-        echo "directory=${changed_directory}" >> $GITHUB_ENV
+      run: echo "::set-output name=directory::$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -oP '^\K.*(?=/)' | uniq)"
     - name: Change directory
       run: cd ${{ steps.changed-directory.outputs.directory }}
     - name: Run tests
       run: sbt test
-      # Optional: This step uploads information to the GitHub dependency graph and unblocking Dependabot alerts for the repository
     - name: Upload dependency graph
       uses: scalacenter/sbt-dependency-submission@ab086b50c947c9774b70f39fc7f6e20ca2706c91
