@@ -26,7 +26,11 @@ jobs:
         cache: 'sbt'
     - name: Determine changed directory
       id: changed-directory
-      run: echo "::set-output name=directory::$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -oP '^\K.*(?=/)' | uniq)"
+      run: |
+        current_commit_hash=$(git rev-parse --short "${{ github.sha }}")
+        before_commit_hash=$(git rev-parse --short "${{ github.event.before }}")
+        echo "::set-output name=current_commit::${current_commit_hash}"
+        echo "::set-output name=before_commit::${before_commit_hash}"
     - name: Change directory
       run: cd ${{ steps.changed-directory.outputs.directory }}
     - name: Run tests
