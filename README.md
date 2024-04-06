@@ -11,3 +11,6 @@
 - Higher Order Functions
 - Anonymous Functions
 - Currying
+
+### LAB 03
+- Scala Collections
