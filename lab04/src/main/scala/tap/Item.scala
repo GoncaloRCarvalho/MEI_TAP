@@ -14,8 +14,7 @@ final case class Multiple(count: Int, item: Item) extends Item
 
 
 object ItemOps:
-  // TODO: Use pattern matching to implement the price function
   def price(it: Item): Double = it match
     case Article(_, price) => price
-    case Bundle(_, discount, items) => items.map(price).sum * discount
+    case Bundle(_, discount, items) => items.map(price).sum * (1-discount)
     case Multiple(count, item) => price(item) * count

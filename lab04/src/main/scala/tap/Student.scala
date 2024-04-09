@@ -1,18 +1,22 @@
 package tap
 
-final case class Student(firstName: String, lastName: String, age: Int):
-
-  def this(name: String, age: Int) =
-    this(name, "lastName", age)
+final case class Student(firstName: String, lastName: String, age: Int)
 
 object Student {
   private def unsafeStudent(firstName: String, lastName: String, age: Int): Student = Student(firstName, lastName, age)
 
+  private val isValidName: String => Boolean = {_.matches("^[a-zA-Z]*$")}
+  private val isValidFullName: String => Boolean = {_.matches("^[a-zA-Z ]*$")}
+  private val isValidAge: Int => Boolean = {_ > 0}
+
   def from(firstName: String, lastName: String, age: Int): Option[Student] =
-    if (firstName.matches("[a-zA-Z]") && lastName.matches("[a-zA-Z]") && age > 0)
+    if (isValidName(firstName) && isValidName(lastName) && isValidAge(age))
       Some(unsafeStudent(firstName, lastName, age)) else None
-    
+
   def from(name: String, age: Int): Option[Student] =
-    if (name.matches("[a-zA-Z ]") && age > 0)
-      Some(unsafeStudent(name, "lastName", age)) else None
+    if (isValidFullName(name) && isValidAge(age))
+      val nameArray = name.split(" ")
+      val fn = nameArray.apply(0)
+      val ln = nameArray.apply(nameArray.length - 1)
+      Some(unsafeStudent(fn, ln, age)) else None
 }
