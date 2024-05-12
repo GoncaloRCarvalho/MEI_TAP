@@ -14,3 +14,6 @@
 
 ### LAB 03
 - Scala Collections
+
+### LAB 06
+- Property-based Testing
